@@ -4,3 +4,12 @@
 *.iws
 out/
 *.pdf
+*.bib
+*.tex
+*.bbl
+*.log
+*.out
+*.aux
+*.docx
+*.gz
+*.zip
