@@ -13,3 +13,6 @@ out/
 *.docx
 *.gz
 *.zip
+*.dvi
+*.te~
+*.bst
