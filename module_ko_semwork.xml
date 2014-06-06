@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ko_semwork" default="compile.module.ko_semwork">
+  <dirname property="module.ko_semwork.basedir" file="${ant.file.module_ko_semwork}"/>
+  
+  <property name="module.jdk.home.ko_semwork" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.ko_semwork" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.ko_semwork" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.ko_semwork" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="ko_semwork.output.dir" value="${module.ko_semwork.basedir}/out/production/ko_semWork"/>
+  <property name="ko_semwork.testoutput.dir" value="${module.ko_semwork.basedir}/out/test/ko_semWork"/>
+  
+  <path id="ko_semwork.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ko_semwork.module.production.classpath">
+    <path refid="${module.jdk.classpath.ko_semwork}"/>
+    <path refid="library.python_3_(/usr/bin/python3)_interpreter_library.classpath"/>
+  </path>
+  
+  <path id="ko_semwork.runtime.production.module.classpath">
+    <pathelement location="${ko_semwork.output.dir}"/>
+    <path refid="library.python_3_(/usr/bin/python3)_interpreter_library.classpath"/>
+  </path>
+  
+  <path id="ko_semwork.module.classpath">
+    <path refid="${module.jdk.classpath.ko_semwork}"/>
+    <pathelement location="${ko_semwork.output.dir}"/>
+    <path refid="library.python_3_(/usr/bin/python3)_interpreter_library.classpath"/>
+  </path>
+  
+  <path id="ko_semwork.runtime.module.classpath">
+    <pathelement location="${ko_semwork.testoutput.dir}"/>
+    <pathelement location="${ko_semwork.output.dir}"/>
+    <path refid="library.python_3_(/usr/bin/python3)_interpreter_library.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ko_semwork">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ko_semwork">
+    <patternset refid="excluded.from.module.ko_semwork"/>
+  </patternset>
+  
+  <path id="ko_semwork.module.sourcepath">
+    <dirset dir="${module.ko_semwork.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ko_semwork" depends="compile.module.ko_semwork.production,compile.module.ko_semwork.tests" description="Compile module ko_semWork"/>
+  
+  <target name="compile.module.ko_semwork.production" description="Compile module ko_semWork; production classes">
+    <mkdir dir="${ko_semwork.output.dir}"/>
+    <javac destdir="${ko_semwork.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ko_semwork}/javac">
+      <compilerarg line="${compiler.args.ko_semwork}"/>
+      <bootclasspath refid="ko_semwork.module.bootclasspath"/>
+      <classpath refid="ko_semwork.module.production.classpath"/>
+      <src refid="ko_semwork.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ko_semwork"/>
+    </javac>
+    
+    <copy todir="${ko_semwork.output.dir}">
+      <fileset dir="${module.ko_semwork.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ko_semwork.tests" depends="compile.module.ko_semwork.production" description="compile module ko_semWork; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ko_semwork" description="cleanup module">
+    <delete dir="${ko_semwork.output.dir}"/>
+    <delete dir="${ko_semwork.testoutput.dir}"/>
+  </target>
+</project>
